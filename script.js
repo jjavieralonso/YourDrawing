@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const paletaColores = document.getElementById('paleta-colores');
     const colorPersonalizado = document.getElementById('color-personalizado');
 
-    const tamanoPincel = document.getElementById('tamano-pincel');
     const btnAumentar = document.getElementById('btn-aumentar');
     const btnDisminuir = document.getElementById('btn-disminuir');
     const btnDeshacer = document.getElementById('btn-deshacer');
@@ -21,10 +20,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let indiceMovimiento = -1;
 
     function dibujar(evento) {
-        const x = evento.clientX - lienzo.getBoundingClientRect().left;
-        const y = evento.clientY - lienzo.getBoundingClientRect().top;
+        const x = evento.clientX || evento.touches[0].clientX;
+        const y = evento.clientY || evento.touches[0].clientY;
 
-        contexto.lineTo(x, y);
+        contexto.lineTo(x - lienzo.getBoundingClientRect().left, y - lienzo.getBoundingClientRect().top);
         contexto.stroke();
     }
 
@@ -33,14 +32,27 @@ document.addEventListener('DOMContentLoaded', function () {
         contexto.moveTo(evento.clientX - lienzo.getBoundingClientRect().left, evento.clientY - lienzo.getBoundingClientRect().top);
         lienzo.addEventListener('mousemove', dibujar);
 
-        // Limpiar los movimientos hacia adelante si se inicia un nuevo dibujo
         if (indiceMovimiento < movimientos.length - 1) {
             movimientos = movimientos.slice(0, indiceMovimiento + 1);
         }
     });
 
+    lienzo.addEventListener('touchstart', function (evento) {
+        evento.preventDefault();
+
+        contexto.beginPath();
+        const touch = evento.touches[0];
+        contexto.moveTo(touch.clientX - lienzo.getBoundingClientRect().left, touch.clientY - lienzo.getBoundingClientRect().top);
+        lienzo.addEventListener('touchmove', dibujar);
+    });
+
     lienzo.addEventListener('mouseup', function () {
         lienzo.removeEventListener('mousemove', dibujar);
+        guardarMovimiento();
+    });
+
+    lienzo.addEventListener('touchend', function () {
+        lienzo.removeEventListener('touchmove', dibujar);
         guardarMovimiento();
     });
 
@@ -86,35 +98,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     btnDeshacer.addEventListener('click', function () {
         if (indiceMovimiento >= 0) {
-            indiceMovimiento--;
             contexto.clearRect(0, 0, lienzo.width, lienzo.height);
-            contexto.putImageData(movimientos[indiceMovimiento], 0, 0);
+            indiceMovimiento--;
+            if (indiceMovimiento >= 0) {
+                contexto.putImageData(movimientos[indiceMovimiento], 0, 0);
+            }
         }
     });
 
     btnRehacer.addEventListener('click', function () {
         if (indiceMovimiento < movimientos.length - 1) {
             indiceMovimiento++;
-            contexto.clearRect(0, 0, lienzo.width, lienzo.height);
             contexto.putImageData(movimientos[indiceMovimiento], 0, 0);
         }
     });
 
     btnBorrar.addEventListener('click', function () {
-        contexto.fillStyle = 'white';
-        contexto.fillRect(0, 0, lienzo.width, lienzo.height);
-        guardarMovimiento();
+        cambiarColor('white');
     });
 
     cambiarColor(colorActual);
     cambiarTamanoPincel(tamanoActual);
-    const btnDescargar = document.getElementById('btn-descargar');
-
+    const btnDescargar = document.getElementById('btn-descargar')
+    var dibujosDescargados=1;
     btnDescargar.addEventListener('click', function () {
         const enlace = document.createElement('a');
         enlace.href = lienzo.toDataURL();
-        enlace.download = 'mi_dibujo.png';
-
+        enlace.download = 'dibujo'+dibujosDescargados+'.png';
+        dibujosDescargados++;
         enlace.click();
     });
 });
