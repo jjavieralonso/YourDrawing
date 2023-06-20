@@ -1,0 +1,71 @@
+body {
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 25px;
+    text-decoration: overline;
+    margin-bottom: -60px;
+}
+
+.redes {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+a {
+    color: white;
+}
+
+.contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#paleta-colores {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+    margin-right: 10px;
+}
+
+.color {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.color-predeterminado {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+input {
+    width: 35px;
+    height: 35px;
+    background: none;
+}
+
+button {
+    width: 35px;
+    height: 35px;
+    font-size: 25px;
+}
+
+#lienzo-dibujo {
+    border: 3px solid black;
+    cursor: crosshair;
+    background-color: white;
+}
