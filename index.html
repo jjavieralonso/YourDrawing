@@ -44,7 +44,7 @@
     </section>
     <div class="contenedor">
         <div id="paleta-colores">
-            <label style="color: white">Tamaño:</label><br>
+            <label style="color: white">Size:</label><br>
             <input type="number" max="800" id="width" value="650">
             <input type="number" max="600" id="height" value="475">
             <div class="color-predeterminado" style="background-color: red;"></div>
@@ -65,6 +65,10 @@
             <button id="btn-descargar"><img src="./images/download.png" width="20px"></button>
         </div>
         <canvas id="lienzo-dibujo"></canvas>
+        <div class="div-fondo">
+            <label for="archivo-fondo">Elegir imagen para fondo</label>
+            <input type="file" id="archivo-fondo" accept="image/*">
+        </div>
     </div>
 
     <script src="script.js"></script>

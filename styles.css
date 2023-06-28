@@ -68,6 +68,21 @@ input {
     background: none;
 }
 
+#archivo-fondo {
+    min-width: 100px;
+}
+
+.div-fondo {
+    background-color:dimgray;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 35px;
+    padding: 5px;
+}
+
 button {
     width: 35px;
     height: 35px;

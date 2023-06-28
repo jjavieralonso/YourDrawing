@@ -27,6 +27,25 @@ document.addEventListener('DOMContentLoaded', function () {
         contexto.clearRect(0, 0, lienzo.width, lienzo.height);
     }
 
+    const archivoFondo = document.getElementById('archivo-fondo');
+
+    archivoFondo.addEventListener('change', function (e) {
+        const archivo = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            const imagen = new Image();
+
+            imagen.onload = function () {
+                contexto.drawImage(imagen, 0, 0, lienzo.width, lienzo.height);
+            };
+
+            imagen.src = event.target.result;
+        };
+
+        reader.readAsDataURL(archivo);
+    });
+
     let colorActual = 'black';
     let tamanoActual = 5;
     let movimientos = [];
