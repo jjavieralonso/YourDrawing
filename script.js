@@ -11,8 +11,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnRehacer = document.getElementById('btn-rehacer');
     const btnBorrar = document.getElementById('btn-borrar');
 
-    lienzo.width = 650;
-    lienzo.height = 475;
+    const inputWidth = document.getElementById('width');
+    const inputHeight = document.getElementById('height');
+
+    inputWidth.addEventListener('input', actualizarLienzo);
+    inputHeight.addEventListener('input', actualizarLienzo);
+    actualizarLienzo();
+    function actualizarLienzo() {
+        const ancho = parseInt(inputWidth.value);
+        const alto = parseInt(inputHeight.value);
+
+        lienzo.width = ancho;
+        lienzo.height = alto;
+
+        contexto.clearRect(0, 0, lienzo.width, lienzo.height);
+    }
 
     let colorActual = 'black';
     let tamanoActual = 5;
@@ -120,11 +133,11 @@ document.addEventListener('DOMContentLoaded', function () {
     cambiarColor(colorActual);
     cambiarTamanoPincel(tamanoActual);
     const btnDescargar = document.getElementById('btn-descargar')
-    var dibujosDescargados=1;
+    var dibujosDescargados = 1;
     btnDescargar.addEventListener('click', function () {
         const enlace = document.createElement('a');
         enlace.href = lienzo.toDataURL();
-        enlace.download = 'dibujo'+dibujosDescargados+'.png';
+        enlace.download = 'dibujo' + dibujosDescargados + '.png';
         dibujosDescargados++;
         enlace.click();
     });
