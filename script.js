@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     btnBorrar.addEventListener('click', function () {
-        cambiarColor('white');
+        contexto.clearRect(0, 0, lienzo.width, lienzo.height);
     });
 
     cambiarColor(colorActual);
